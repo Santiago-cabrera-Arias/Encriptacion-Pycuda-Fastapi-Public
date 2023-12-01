@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamiento de Imágenes</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Procesamiento de Imágenes</h1>
+        <form id="image_file" action="/aplicar_filtro" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <div class="image-container">
+                <h4>Subir una imagen</h4>
+                <label for="inputImage" class="upload-label" id="fileLabel">
+                    <span class="upload-icon">➕</span> Seleccionar archivo
+                </label>
+                <input type="file" id="inputImage" name="image_file" accept="image/*" style="display: none;" onchange="displayFileName()">
+            </div>
+            
+
+            <div class="radio-container">
+                <input type="radio" id="kernel3x3" name="kernel_size" value="3">
+                <label for="kernel3x3">3x3</label>
+
+                <input type="radio" id="kernel7x7" name="kernel_size" value="7">
+                <label for="kernel7x7">7x7</label>
+
+                <input type="radio" id="kernel13x13" name="kernel_size" value="13">
+                <label for="kernel13x13">13x13</label>
+
+                <input type="radio" id="kernel17x17" name="kernel_size" value="17">
+                <label for="kernel17x17">17x17</label>
+            </div>
+
+            <div class="dropdown-container">
+                <label for="processingOptions">Opciones:</label>
+                <select id="processingOptions" name="processingOptions">
+                    <option value="filtroMedia">Filtro Media</option>
+                    <option value="filtroGaussiano">Filtro Gaussiano</option>
+                    <option value="filtroPrewitt">Filtro Prewitt</option>
+                </select>
+            </div>
+
+            <br><br>
+
+            <div class="button">
+                <button type="submit">Procesar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="result-container">
+        <div class="result-image">
+            <h3><br>Imagen Original</br></h3>
+            <img id="processedImageOrg" src="{{ image_org }}" alt="Resultado del procesamiento">
+        </div>
+
+        <div class="result-image">
+            <h3>Resultado de la Imagen</h3>
+            <img id="processedImage" src="{{ image_url }}" alt="Resultado del procesamiento">
+        </div>
+    </div>
+
+    <br><br><br><br>
+
+    <div class="info-title">
+        <h3>Información de procesamiento.</h3>
+    </div>    
+    <div class="info-container">
+        <p id="processingInfo">
+            {{ processing_info }}
+        </p>
+    </div>
+
+    <br><br><br><br>
+
+    <script>
+        // Tu script JavaScript aquí
+
+        function displayFileName() {
+            var input = document.getElementById('inputImage');
+            var label = document.getElementById('fileLabel');
+            
+            if (input.files.length > 0) {
+                label.textContent = 'Archivo seleccionado: ' + input.files[0].name;
+            } else {
+                label.textContent = 'Seleccionar archivo';
+            }
+        }
+
+
+    </script>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamiento de Imágenes</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Procesamiento de Imágenes</h1>
+        <form id="image_file" action="/aplicar_filtro" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <div class="image-container">
+                <h2>Imagen ingresada</h2>
+                <input type="file" id="inputImage" name="image_file" accept="image/*" style="display: none;">
+                <label for="inputImage" class="upload-container">Ingrese una imagen</label>
+            </div>
+
+            <div class="radio-container">
+                <input type="radio" id="kernel3x3" name="kernel_size" value="3">
+                <label for="kernel3x3">3x3</label>
+
+                <input type="radio" id="kernel7x7" name="kernel_size" value="7">
+                <label for="kernel7x7">7x7</label>
+
+                <input type="radio" id="kernel13x13" name="kernel_size" value="13">
+                <label for="kernel13x13">13x13</label>
+
+                <input type="radio" id="kernel17x17" name="kernel_size" value="17">
+                <label for="kernel17x17">17x17</label>
+            </div>
+
+            <div class="dropdown-container">
+                <label for="processingOptions">Opciones:</label>
+                <select id="processingOptions" name="processingOptions">
+                    <option value="filtroMedia">Filtro Media</option>
+                    <option value="filtroGaussiano">Filtro Gaussiano</option>
+                    <option value="filtroPrewitt">Filtro Prewitt</option>
+                </select>
+            </div>
+
+            <br><br>
+
+            <div class="button">
+                <button type="submit">Procesar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+
+        <div class="result-container">
+            <h3>Imagen Original</h3>
+            <img id="processedImage" src="{{ image_org }}" alt="Resultado del procesamiento">
+        </div>
+
+        <div class="result-container">
+            <h3>Resultado de la Imagen</h3>
+            <img id="processedImage" src="{{ image_url }}" alt="Resultado del procesamiento">
+        </div>
+
+        <div class="info-container">
+            <h2>Información de procesamiento.</h2>
+            <p id="processingInfo">
+                {{ processing_info }}
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('inputImage').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const url = URL.createObjectURL(file);
+            document.getElementById('selectedImage').src = url;
+        });
+
+        //obtener radio Button
+        document.querySelectorAll('.radio-container input[type=radio]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                return this.value
+            });
+        });
+
+        // Obtener el elemento select por su id
+        var selectElement = document.getElementById('processingOptions');
+        // Añadir un event listener para el cambio en el valor seleccionado
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+            console.log('Filtro seleccionado:', selectedValue);
+            return selectedValue
+        });
+
+    </script>
+
+    
+</body>
+</html> -->

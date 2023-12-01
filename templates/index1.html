@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplicacion de matrices</title>
+    <p>Realizado por Santiago Cabrera</p>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Multiplicacion de matrices</h1>
+        <form id="image_file" action="/aplicar_filtro" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <div class="input-container">
+                <h4>Ingrese Tamaño Matriz</h4>
+                <label for="matriz_1">Valor 1</label>
+                <input type="text" id="dato_1" name="matriz_1">
+                <br>
+                <label for="matriz_2">Valor 2</label>
+                <input type="text" id="dato_2" name="matriz_2">
+            </div>
+            <div class="button">
+                <button type="submit">Multiplicar</button>
+            </div>
+
+            <div class="info-container">
+                <p id="processingInfo">
+                    {{ processing_info }}
+                </p>
+            </div>
+
+        </form>
